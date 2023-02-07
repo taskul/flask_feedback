@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="display-6">Welcome back {{ user.first_name }}</h1>
+<form>
+    <button class="btn btn-danger" formmethod="POST" formaction='/users/{{user.username}}/delete'>
+        Delete Profile
+    </button>
+</form>
+
+<ul>
+    <li>{{ user.username }}</li>
+    <li>{{ user.email }}</li>
+    <li>{{ user.first_name }}</li>
+    <li>{{ user.last_name }}</li>
+</ul>
+<div class="card my-4">
+    <div class="card-body">
+        <a href="/users/{{user.username}}/feedback/add">Add Feedback</a>
+    </div>
+</div>
+
+{% if user.feedback %}
+{% for feedback in user.feedback %}
+<div class="card my-4">
+    <div class="card-body">
+        <p class="h5">{{ feedback.title }}</p>
+        <p class="lead">{{ feedback.content }}</p>
+    </div>
+    <a href='/feedback/{{feedback.id}}/update'>
+        <div type="button" class="btn btn-link">Edit</div>
+    </a>
+    <form>
+        <button class="btn btn-danger" formmethod="POST" formaction='/feedback/{{feedback.id}}/delete'>
+            Delete
+        </button>
+    </form>
+</div>
+{% endfor %}
+{% endif %}
+
+
+
+
+{% endblock %}
